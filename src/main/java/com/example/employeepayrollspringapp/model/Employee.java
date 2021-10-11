@@ -4,6 +4,13 @@ import com.example.employeepayrollspringapp.dto.EmployeeDto;
 import lombok.Getter;
 import lombok.Setter;
 
+/**
+ * Employee
+ * stores employee details
+ * @author Aditi
+ * @version 0.0.1
+ * @since 11-10-2021
+ */
 @Getter
 @Setter
 public class Employee {
@@ -13,6 +20,7 @@ public class Employee {
 
     public Employee() {}
 
+    /* constructor to define employee details */
     public Employee(int emp_id, EmployeeDto employeeDto){
         this.emp_id=emp_id;
         this.emp_name=employeeDto.getEmp_name();

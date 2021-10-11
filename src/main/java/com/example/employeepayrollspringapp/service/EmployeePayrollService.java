@@ -7,9 +7,18 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Employee Payroll Service
+ *  services which manages employee payroll data
+ * @author Aditi
+ * @version 0.0.1
+ * @since 11-10-2021
+ */
+
 @Service
 public class EmployeePayrollService implements IEmployeePayrollService {
 
+    // list of employees
     private static List<Employee> employeeList = new ArrayList<>();
 
     public List<Employee> findEmployeePayrollData() {
