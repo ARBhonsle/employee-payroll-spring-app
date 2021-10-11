@@ -1,36 +1,55 @@
 package com.example.employeepayrollspringapp.controller;
 
 import com.example.employeepayrollspringapp.dto.EmployeeDto;
+import com.example.employeepayrollspringapp.dto.ResponseDto;
+import com.example.employeepayrollspringapp.model.Employee;
+import com.example.employeepayrollspringapp.service.IEmployeePayrollService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/payroll-service")
 public class EmployeeController {
 
-    @RequestMapping(value = {"", "/", "/get"})
-    public ResponseEntity<String> getEmployeePayrollData() {
-        return new ResponseEntity<String>("GET request for employee payroll data successful", HttpStatus.OK);
+    @Autowired
+    private IEmployeePayrollService employeePayrollService;
+
+    @RequestMapping(value = {"", "/", "/get"}, method = RequestMethod.GET)
+    public ResponseEntity<ResponseDto> getEmployeePayrollData() {
+        List<Employee> employeeList = employeePayrollService.findEmployeePayrollData();
+        ResponseDto responseDto = new ResponseDto("GET request for employee payroll data successful", employeeList);
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
     @GetMapping(value = {"/get/{empId}"})
-    public ResponseEntity<String> getEmployeePayrollId(@PathVariable int empId) {
-        return new ResponseEntity<String>("GET request for employee record with id " + empId + " successful", HttpStatus.OK);
+    public ResponseEntity<ResponseDto> getEmployeePayrollId(@PathVariable int empId) {
+        Employee employeeDto = employeePayrollService.findEmployeeById(empId);
+        ResponseDto responseDto = new ResponseDto("GET request for employee record with id " + empId + " successful", employeeDto);
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
     @PostMapping(value = {"/create"})
-    public ResponseEntity<String> addEmployeePayrollData(@RequestBody EmployeeDto employeeDto) {
-        return new ResponseEntity<String>("POST request for employee record creation successful", HttpStatus.OK);
+    public ResponseEntity<ResponseDto> addEmployeePayrollData(@RequestBody EmployeeDto employeeDto) {
+        Employee employee = employeePayrollService.addEmployee(employeeDto);
+        ResponseDto responseDto = new ResponseDto("POST request for employee record creation successful", employee);
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
-    @PutMapping(value = "/update")
-    public ResponseEntity<String> updateEmployeePayrollData(@RequestBody EmployeeDto employeeDto) {
-        return new ResponseEntity<String>("PUT request for employee record update successful", HttpStatus.OK);
+    @PutMapping(value = "/update/{empId}")
+    public ResponseEntity<ResponseDto> updateEmployeePayrollData(@PathVariable int empId, @RequestBody EmployeeDto employeeDto) {
+        Employee employee = employeePayrollService.updateEmployee(empId, employeeDto);
+        ResponseDto responseDto = new ResponseDto("PUT request for employee record update successful", employee);
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/delete/{empId}")
-    public ResponseEntity<String> deleteEmployeePayrollId(@PathVariable int empId) {
-        return new ResponseEntity<String>("Delete request for employee id " + empId + " request successful", HttpStatus.OK);
+    public ResponseEntity<ResponseDto> deleteEmployeePayrollId(@PathVariable int empId) {
+        String result = employeePayrollService.deleteEmployee(empId);
+        ResponseDto responseDto = new ResponseDto("Delete request for employee id " + empId + " request successful", result);
+        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
     }
 }
