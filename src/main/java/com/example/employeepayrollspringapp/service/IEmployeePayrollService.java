@@ -1,6 +1,7 @@
 package com.example.employeepayrollspringapp.service;
 
 import com.example.employeepayrollspringapp.dto.EmployeeDto;
+import com.example.employeepayrollspringapp.exceptions.EmployeeException;
 import com.example.employeepayrollspringapp.model.Employee;
 
 import java.util.List;
