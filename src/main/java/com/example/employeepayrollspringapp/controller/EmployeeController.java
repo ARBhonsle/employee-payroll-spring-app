@@ -44,7 +44,7 @@ public class EmployeeController {
     * */
 
     @GetMapping(value = {"/get/{empId}"})
-    public ResponseEntity<ResponseDto> getEmployeePayrollId(@PathVariable int empId) {
+    public ResponseEntity<ResponseDto> getEmployeePayrollId(@PathVariable int empId) throws EmployeeException {
         Employee employeeDto = employeePayrollService.findEmployeeById(empId);
         ResponseDto responseDto = new ResponseDto("GET request for employee record with id " + empId + " successful", employeeDto);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
@@ -68,7 +68,7 @@ public class EmployeeController {
      * */
 
     @PutMapping(value = "/update/{empId}")
-    public ResponseEntity<ResponseDto> updateEmployeePayrollData(@PathVariable int empId, @RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<ResponseDto> updateEmployeePayrollData(@PathVariable int empId, @RequestBody EmployeeDto employeeDto) throws EmployeeException {
         Employee employee = employeePayrollService.updateEmployee(empId, employeeDto);
         ResponseDto responseDto = new ResponseDto("PUT request for employee record update successful", employee);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
@@ -80,7 +80,7 @@ public class EmployeeController {
      * */
 
     @DeleteMapping(value = "/delete/{empId}")
-    public ResponseEntity<ResponseDto> deleteEmployeePayrollId(@PathVariable int empId) {
+    public ResponseEntity<ResponseDto> deleteEmployeePayrollId(@PathVariable int empId) throws EmployeeException {
         String result = employeePayrollService.deleteEmployee(empId);
         ResponseDto responseDto = new ResponseDto("Delete request for employee id " + empId + " request successful", result);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);

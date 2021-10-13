@@ -3,11 +3,11 @@ package com.example.employeepayrollspringapp.service;
 import com.example.employeepayrollspringapp.dto.EmployeeDto;
 import com.example.employeepayrollspringapp.exceptions.EmployeeException;
 import com.example.employeepayrollspringapp.model.Employee;
+import com.example.employeepayrollspringapp.repository.EmployeeRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,35 +23,36 @@ import java.util.List;
 public class EmployeePayrollService implements IEmployeePayrollService {
 
     @Autowired
-    ModelMapper modelMapper;
-
-    // list of employees
-    private static List<Employee> employeeList = new ArrayList<>();
+    private EmployeeRepository employeeRepository;
+    @Autowired
+    private ModelMapper modelMapper;
 
     public List<Employee> findEmployeePayrollData() {
-        return employeeList;
+        return employeeRepository.findAll();
     }
 
-    public Employee findEmployeeById(int empId) {
-        Employee employee = employeeList.get(empId - 1);
+    public Employee findEmployeeById(int empId) throws EmployeeException {
+        Employee employee = employeeRepository.findById(empId).orElseThrow(() -> new EmployeeException("Cannot find employee payroll record with id: " + empId));
         return employee;
     }
 
     public Employee addEmployee(EmployeeDto employeeDto) {
-        Employee employee = new Employee(employeeList.size() + 1, employeeDto);
-        employeeList.add(employee);
+        Employee employee = new Employee();
+        modelMapper.map(employeeDto,employee);
+        employeeRepository.save(employee);
         return employee;
     }
 
-    public Employee updateEmployee(int empId, EmployeeDto employeeDto) {
+    public Employee updateEmployee(int empId, EmployeeDto employeeDto) throws EmployeeException {
         Employee employee = this.findEmployeeById(empId);
         modelMapper.map(employeeDto, employee);
-        employeeList.set(empId - 1, employee);
+        employeeRepository.save(employee);
         return employee;
     }
 
-    public String deleteEmployee(int empId) {
-        employeeList.remove(empId - 1);
+    public String deleteEmployee(int empId) throws EmployeeException {
+        Employee employee = this.findEmployeeById(empId);
+        employeeRepository.delete(employee);
         return "Employee record with id: " + empId + " is deleted";
     }
 
