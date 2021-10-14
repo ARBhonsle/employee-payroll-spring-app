@@ -27,6 +27,10 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     // https://mvnrepository.com/artifact/org.modelmapper.extensions/modelmapper-spring
     implementation group: 'org.modelmapper.extensions', name: 'modelmapper-spring', version: '2.4.4'
+    // https://mvnrepository.com/artifact/org.mockito/mockito-junit-jupiter
+    testImplementation group: 'org.mockito', name: 'mockito-junit-jupiter', version: '4.0.0'
+    // https://mvnrepository.com/artifact/org.projectlombok/lombok
+    compileOnly group: 'org.projectlombok', name: 'lombok', version: '1.18.22'
 
 }
 

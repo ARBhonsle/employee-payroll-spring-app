@@ -2,7 +2,6 @@ package com.example.employeepayrollspringapp.controller;
 
 import com.example.employeepayrollspringapp.dto.EmployeeDto;
 import com.example.employeepayrollspringapp.dto.ResponseDto;
-import com.example.employeepayrollspringapp.exceptions.EmployeeException;
 import com.example.employeepayrollspringapp.model.Employee;
 import com.example.employeepayrollspringapp.service.IEmployeePayrollService;
 import org.springframework.beans.factory.annotation.Autowired;
