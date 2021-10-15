@@ -32,9 +32,8 @@ public class EmployeePayrollService implements IEmployeePayrollService {
         return employeeList;
     }
 
-    public Employee findEmployeeById(int empId) {
-        Employee employee = employeeList.get(empId - 1);
-        return employee;
+    public Employee findEmployeeById(int empId) throws EmployeeException {
+        return employeeList.stream().filter(empData -> empData.getEmp_id() == empId).findFirst().orElseThrow(() -> new EmployeeException("Cannot find Employee with id: " + empId));
     }
 
     public Employee addEmployee(EmployeeDto employeeDto) {
@@ -43,15 +42,16 @@ public class EmployeePayrollService implements IEmployeePayrollService {
         return employee;
     }
 
-    public Employee updateEmployee(int empId, EmployeeDto employeeDto) {
+    public Employee updateEmployee(int empId, EmployeeDto employeeDto) throws EmployeeException {
         Employee employee = this.findEmployeeById(empId);
         modelMapper.map(employeeDto, employee);
         employeeList.set(empId - 1, employee);
         return employee;
     }
 
-    public String deleteEmployee(int empId) {
-        employeeList.remove(empId - 1);
+    public String deleteEmployee(int empId) throws EmployeeException {
+        Employee employee = this.findEmployeeById(empId);
+        employeeList.remove(employee);
         return "Employee record with id: " + empId + " is deleted";
     }
 

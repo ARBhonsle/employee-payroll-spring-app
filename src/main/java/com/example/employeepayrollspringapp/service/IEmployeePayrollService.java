@@ -23,7 +23,7 @@ public interface IEmployeePayrollService {
      *  @param empId
      *  @return employee
      * */
-    Employee findEmployeeById(int empId);
+    Employee findEmployeeById(int empId) throws EmployeeException;
 
     /* method to add payroll data for given employeeDto
      *  @param employeeDto
@@ -35,11 +35,11 @@ public interface IEmployeePayrollService {
      *  @param empId, employeeDto
      *  @return employee
      * */
-    Employee updateEmployee(int empId, EmployeeDto employeeDto);
+    Employee updateEmployee(int empId, EmployeeDto employeeDto) throws EmployeeException;
 
     /* method to delete payroll data for given empID
      *  @param empId
      *  @return String
      * */
-    String deleteEmployee(int empId);
+    String deleteEmployee(int empId) throws EmployeeException;
 }
