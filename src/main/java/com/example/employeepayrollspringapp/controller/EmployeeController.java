@@ -9,11 +9,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
  * Employee Controller
- *  receives http requests from client and responds to server accordingly
+ * receives http requests from client and responds to server accordingly
+ *
  * @author Aditi
  * @version 0.0.1
  * @since 11-10-2021
@@ -27,8 +29,8 @@ public class EmployeeController {
     private IEmployeePayrollService employeePayrollService;
 
     /* method to display payroll data when client sends GET request
-    * @return ResponseEntity
-    * */
+     * @return ResponseEntity
+     * */
 
     @RequestMapping(value = {"", "/", "/get"}, method = RequestMethod.GET)
     public ResponseEntity<ResponseDto> getEmployeePayrollData() {
@@ -38,9 +40,9 @@ public class EmployeeController {
     }
 
     /* method to display payroll data when client sends GET request with empId in url path
-    *  @param empId
-    *  @return ResponseEntity
-    * */
+     *  @param empId
+     *  @return ResponseEntity
+     * */
 
     @GetMapping(value = {"/get/{empId}"})
     public ResponseEntity<ResponseDto> getEmployeePayrollId(@PathVariable int empId) {
@@ -55,7 +57,7 @@ public class EmployeeController {
      * */
 
     @PostMapping(value = {"/create"})
-    public ResponseEntity<ResponseDto> addEmployeePayrollData(@RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<ResponseDto> addEmployeePayrollData(@Valid @RequestBody EmployeeDto employeeDto) {
         Employee employee = employeePayrollService.addEmployee(employeeDto);
         ResponseDto responseDto = new ResponseDto("POST request for employee record creation successful", employee);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
@@ -67,7 +69,7 @@ public class EmployeeController {
      * */
 
     @PutMapping(value = "/update/{empId}")
-    public ResponseEntity<ResponseDto> updateEmployeePayrollData(@PathVariable int empId, @RequestBody EmployeeDto employeeDto) {
+    public ResponseEntity<ResponseDto> updateEmployeePayrollData(@PathVariable int empId, @Valid @RequestBody EmployeeDto employeeDto) {
         Employee employee = employeePayrollService.updateEmployee(empId, employeeDto);
         ResponseDto responseDto = new ResponseDto("PUT request for employee record update successful", employee);
         return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
