@@ -66,3 +66,10 @@ java.lang.IndexOutOfBoundsException: Index 10 out of bounds for length 1
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61) ~[tomcat-embed-core-9.0.53.jar:9.0.53]
 	at java.base/java.lang.Thread.run(Thread.java:831) ~[na:na]
 
+2021-10-15 18:43:23.503  INFO 14988 --- [main] .e.e.EmployeePayrollSpringAppApplication : Starting EmployeePayrollSpringAppApplication using Java 16.0.1 on DESKTOP-3QAEOV4 with PID 14988 (D:\SpringBootTomcatApplications\employee-payroll-spring-project\employee-payroll-spring-app\build\classes\java\main started by Aditi in D:\SpringBootTomcatApplications\employee-payroll-spring-project\employee-payroll-spring-app)
+2021-10-15 18:43:23.503 DEBUG 14988 --- [main] .e.e.EmployeePayrollSpringAppApplication : Running with Spring Boot v2.5.5, Spring v5.3.10
+2021-10-15 18:43:23.503  INFO 14988 --- [main] .e.e.EmployeePayrollSpringAppApplication : The following profiles are active: dev
+2021-10-15 18:43:28.705  WARN 14988 --- [main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2021-10-15 18:43:29.377  INFO 14988 --- [main] .e.e.EmployeePayrollSpringAppApplication : Started EmployeePayrollSpringAppApplication in 6.425 seconds (JVM running for 7.302)
+2021-10-15 18:43:29.377  INFO 14988 --- [main] .e.e.EmployeePayrollSpringAppApplication : Employee Payroll Spring App Started
+2021-10-15 18:43:29.377  INFO 14988 --- [main] .e.e.EmployeePayrollSpringAppApplication : Environment

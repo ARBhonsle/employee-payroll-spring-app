@@ -3,6 +3,7 @@ package com.example.employeepayrollspringapp;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ApplicationContext;
 
 /**
  * EmployeePayrollSpringAppApplication
@@ -16,8 +17,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class EmployeePayrollSpringAppApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(EmployeePayrollSpringAppApplication.class, args);
+        ApplicationContext context = SpringApplication.run(EmployeePayrollSpringAppApplication.class, args);
         log.info("Employee Payroll Spring App Started");
+        log.info("Environment",context.getEnvironment().getProperty("environment"));
     }
 
 }
