@@ -1,5 +1,6 @@
 package com.example.employeepayrollspringapp.service;
 
+import com.example.employeepayrollspringapp.constants.Message;
 import com.example.employeepayrollspringapp.dto.EmployeeDto;
 import com.example.employeepayrollspringapp.exceptions.EmployeeException;
 import com.example.employeepayrollspringapp.model.Employee;
@@ -33,7 +34,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
     }
 
     public Employee findEmployeeById(int empId) throws EmployeeException {
-        return employeeList.stream().filter(empData -> empData.getEmp_id() == empId).findFirst().orElseThrow(() -> new EmployeeException("Cannot find Employee with id: " + empId));
+        return employeeList.stream().filter(empData -> empData.getEmp_id() == empId).findFirst().orElseThrow(() -> new EmployeeException(Message.EXCEPTION_WHILE_FINDING_ID.getMessage()));
     }
 
     public Employee addEmployee(EmployeeDto employeeDto) {
@@ -52,7 +53,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
     public String deleteEmployee(int empId) throws EmployeeException {
         Employee employee = this.findEmployeeById(empId);
         employeeList.remove(employee);
-        return "Employee record with id: " + empId + " is deleted";
+        return Message.DELETE_SUCCESS_RESPONSE.getMessage();
     }
 
 }

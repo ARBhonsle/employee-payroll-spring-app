@@ -1,5 +1,6 @@
 package com.example.employeepayrollspringapp.exceptions;
 
+import com.example.employeepayrollspringapp.constants.Message;
 import com.example.employeepayrollspringapp.dto.ResponseDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +23,14 @@ import java.util.stream.Collectors;
 public class EmployeePayrollExceptionHandling {
     @ExceptionHandler(value = EmployeeException.class)
     public ResponseEntity<ResponseDto> payrollExceptionHandler(EmployeeException employeeException) {
-        ResponseDto responseDto = new ResponseDto("Exception while processing REST Request", employeeException.getMessage());
+        ResponseDto responseDto = new ResponseDto(Message.EXCEPTION_WHILE_REST_REQUEST.getMessage(), employeeException.getMessage());
         return new ResponseEntity<>(responseDto, HttpStatus.BAD_REQUEST);
     }
     @ExceptionHandler(value = MethodArgumentNotValidException.class)
     public ResponseEntity<ResponseDto> methodArgNotValidExceptionHandler(MethodArgumentNotValidException methodArgumentNotValidException){
         List<ObjectError> errorList = methodArgumentNotValidException.getBindingResult().getAllErrors();
         List<String> errMsg =errorList.stream().map(objErr -> objErr.getDefaultMessage()).collect(Collectors.toList());
-        ResponseDto responseDto = new ResponseDto("Exception while processing REST Request", errMsg);
+        ResponseDto responseDto = new ResponseDto(Message.EXCEPTION_WHILE_REST_REQUEST.getMessage(), errMsg);
         return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
     }
 }

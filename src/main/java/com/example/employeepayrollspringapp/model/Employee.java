@@ -1,10 +1,12 @@
 package com.example.employeepayrollspringapp.model;
 
 import com.example.employeepayrollspringapp.dto.EmployeeDto;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import java.util.List;
 
 /**
  * Employee
@@ -16,10 +18,16 @@ import javax.persistence.Column;
  */
 @Getter
 @Setter
+@Data
 public class Employee {
     private int emp_id;
     private String emp_name;
     private String salary;
+    public String gender;
+    public String note;
+    private String profilePic;
+    public List<String> department;
+
 
     public Employee() {
     }
