@@ -5,7 +5,8 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
+import javax.persistence.*;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -19,23 +20,17 @@ import java.util.List;
 @Getter
 @Setter
 @Data
+@Entity
 public class Employee {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int emp_id;
     private String emp_name;
     private String salary;
     public String gender;
     public String note;
+    private LocalDate startDate;
     private String profilePic;
-    public List<String> department;
+    public String department;
 
-
-    public Employee() {
-    }
-
-    /* constructor to define employee details */
-    public Employee(int emp_id, EmployeeDto employeeDto) {
-        this.emp_id = emp_id;
-        this.emp_name = employeeDto.getEmp_name();
-        this.salary = employeeDto.getSalary();
-    }
 }

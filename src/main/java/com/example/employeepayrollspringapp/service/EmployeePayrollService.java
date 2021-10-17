@@ -2,8 +2,10 @@ package com.example.employeepayrollspringapp.service;
 
 import com.example.employeepayrollspringapp.constants.Message;
 import com.example.employeepayrollspringapp.dto.EmployeeDto;
+import com.example.employeepayrollspringapp.dto.ResponseDto;
 import com.example.employeepayrollspringapp.exceptions.EmployeeException;
 import com.example.employeepayrollspringapp.model.Employee;
+import com.example.employeepayrollspringapp.repository.EmployeePayrollRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,36 +26,47 @@ import java.util.List;
 public class EmployeePayrollService implements IEmployeePayrollService {
 
     @Autowired
+    private EmployeePayrollRepository employeePayrollRepository;
+
+    @Autowired
     ModelMapper modelMapper;
 
-    // list of employees
-    private static List<Employee> employeeList = new ArrayList<>();
-
-    public List<Employee> findEmployeePayrollData() {
-        return employeeList;
+    public ResponseDto findEmployeePayrollData() {
+        ResponseDto responseDto = new ResponseDto(Message.GET_ALL_SUCCESSFUL.getMessage(), employeePayrollRepository.findAll());
+        return responseDto;
     }
 
-    public Employee findEmployeeById(int empId) throws EmployeeException {
-        return employeeList.stream().filter(empData -> empData.getEmp_id() == empId).findFirst().orElseThrow(() -> new EmployeeException(Message.EXCEPTION_WHILE_FINDING_ID.getMessage()));
+    private Employee getEmployeeById(int empId) throws EmployeeException {
+        return employeePayrollRepository.findById(empId).orElseThrow(() -> new EmployeeException(Message.EXCEPTION_WHILE_FINDING_ID.getMessage()));
     }
 
-    public Employee addEmployee(EmployeeDto employeeDto) {
-        Employee employee = new Employee(employeeList.size() + 1, employeeDto);
-        employeeList.add(employee);
-        return employee;
+    public ResponseDto findEmployeeById(int empId) throws EmployeeException {
+        Employee employee = this.getEmployeeById(empId);
+        ResponseDto responseDto = new ResponseDto(Message.GET_BY_ID_SUCCESSFUL.getMessage(), employee);
+        return responseDto;
     }
 
-    public Employee updateEmployee(int empId, EmployeeDto employeeDto) throws EmployeeException {
-        Employee employee = this.findEmployeeById(empId);
+    public ResponseDto addEmployee(EmployeeDto employeeDto) {
+        Employee employee = new Employee();
         modelMapper.map(employeeDto, employee);
-        employeeList.set(empId - 1, employee);
-        return employee;
+        employeePayrollRepository.save(employee);
+        ResponseDto responseDto = new ResponseDto(Message.POST_SUCCESSFUL.getMessage(), employee);
+        return responseDto;
     }
 
-    public String deleteEmployee(int empId) throws EmployeeException {
-        Employee employee = this.findEmployeeById(empId);
-        employeeList.remove(employee);
-        return Message.DELETE_SUCCESS_RESPONSE.getMessage();
+    public ResponseDto updateEmployee(int empId, EmployeeDto employeeDto) throws EmployeeException {
+        Employee employee = this.getEmployeeById(empId);
+        modelMapper.map(employeeDto, employee);
+        employeePayrollRepository.save(employee);
+        ResponseDto responseDto = new ResponseDto(Message.UPDATE_BY_ID_SUCCESSFUL.getMessage(), employee);
+        return responseDto;
+    }
+
+    public ResponseDto deleteEmployee(int empId) throws EmployeeException {
+        Employee employee = this.getEmployeeById(empId);
+        employeePayrollRepository.delete(employee);
+        ResponseDto responseDto = new ResponseDto(Message.DELETE_SUCCESSFUL.getMessage(), Message.DELETE_SUCCESS_RESPONSE.getMessage());
+        return responseDto;
     }
 
 }

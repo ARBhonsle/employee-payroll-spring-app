@@ -1,10 +1,8 @@
 package com.example.employeepayrollspringapp.controller;
 
-import com.example.employeepayrollspringapp.constants.Message;
 import com.example.employeepayrollspringapp.dto.EmployeeDto;
 import com.example.employeepayrollspringapp.dto.ResponseDto;
 import com.example.employeepayrollspringapp.exceptions.EmployeeException;
-import com.example.employeepayrollspringapp.model.Employee;
 import com.example.employeepayrollspringapp.service.IEmployeePayrollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,7 +10,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 /**
  * Employee Controller
@@ -36,9 +33,8 @@ public class EmployeeController {
 
     @RequestMapping(value = {"", "/", "/get"}, method = RequestMethod.GET)
     public ResponseEntity<ResponseDto> getEmployeePayrollData() {
-        List<Employee> employeeList = employeePayrollService.findEmployeePayrollData();
-        ResponseDto responseDto = new ResponseDto(Message.GET_ALL_SUCCESSFUL.getMessage(), employeeList);
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        ResponseDto responseDto = employeePayrollService.findEmployeePayrollData();
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     /* method to display payroll data when client sends GET request with empId in url path
@@ -48,9 +44,8 @@ public class EmployeeController {
 
     @GetMapping(value = {"/get/{empId}"})
     public ResponseEntity<ResponseDto> getEmployeePayrollId(@PathVariable int empId) throws EmployeeException {
-        Employee employeeDto = employeePayrollService.findEmployeeById(empId);
-        ResponseDto responseDto = new ResponseDto(Message.GET_BY_ID_SUCCESSFUL.getMessage(), employeeDto);
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        ResponseDto responseDto = employeePayrollService.findEmployeeById(empId);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     /* method to store payroll data when client sends POST request with employeeDto in request body
@@ -60,9 +55,8 @@ public class EmployeeController {
 
     @PostMapping(value = {"/create"})
     public ResponseEntity<ResponseDto> addEmployeePayrollData(@Valid @RequestBody EmployeeDto employeeDto) {
-        Employee employee = employeePayrollService.addEmployee(employeeDto);
-        ResponseDto responseDto = new ResponseDto(Message.POST_SUCCESSFUL.getMessage(), employee);
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        ResponseDto responseDto = employeePayrollService.addEmployee(employeeDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     /* method to update payroll data when client sends POST request with empId in url path and employeeDto in request body
@@ -72,9 +66,8 @@ public class EmployeeController {
 
     @PutMapping(value = "/update/{empId}")
     public ResponseEntity<ResponseDto> updateEmployeePayrollData(@PathVariable int empId, @Valid @RequestBody EmployeeDto employeeDto) throws EmployeeException {
-        Employee employee = employeePayrollService.updateEmployee(empId, employeeDto);
-        ResponseDto responseDto = new ResponseDto(Message.UPDATE_BY_ID_SUCCESSFUL.getMessage(), employee);
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        ResponseDto responseDto = employeePayrollService.updateEmployee(empId, employeeDto);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 
     /* method to delete payroll data when client sends DELETE request with empId in url path
@@ -84,8 +77,7 @@ public class EmployeeController {
 
     @DeleteMapping(value = "/delete/{empId}")
     public ResponseEntity<ResponseDto> deleteEmployeePayrollId(@PathVariable int empId) throws EmployeeException {
-        String result = employeePayrollService.deleteEmployee(empId);
-        ResponseDto responseDto = new ResponseDto(Message.DELETE_SUCCESSFUL.getMessage(), result);
-        return new ResponseEntity<ResponseDto>(responseDto, HttpStatus.OK);
+        ResponseDto responseDto = employeePayrollService.deleteEmployee(empId);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
     }
 }

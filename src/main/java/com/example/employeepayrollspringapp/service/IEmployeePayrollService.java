@@ -1,6 +1,7 @@
 package com.example.employeepayrollspringapp.service;
 
 import com.example.employeepayrollspringapp.dto.EmployeeDto;
+import com.example.employeepayrollspringapp.dto.ResponseDto;
 import com.example.employeepayrollspringapp.exceptions.EmployeeException;
 import com.example.employeepayrollspringapp.model.Employee;
 
@@ -17,29 +18,29 @@ public interface IEmployeePayrollService {
     /* method to display payroll data
      *  @return employeeList
      * */
-    List<Employee> findEmployeePayrollData();
+    ResponseDto findEmployeePayrollData();
 
     /* method to display payroll data for given empId
      *  @param empId
      *  @return employee
      * */
-    Employee findEmployeeById(int empId) throws EmployeeException;
+    ResponseDto findEmployeeById(int empId) throws EmployeeException;
 
     /* method to add payroll data for given employeeDto
      *  @param employeeDto
      *  @return employee
      * */
-    Employee addEmployee(EmployeeDto employeeDto);
+    ResponseDto addEmployee(EmployeeDto employeeDto);
 
     /* method to update payroll data for given empID in employeeDto
      *  @param empId, employeeDto
      *  @return employee
      * */
-    Employee updateEmployee(int empId, EmployeeDto employeeDto) throws EmployeeException;
+    ResponseDto updateEmployee(int empId, EmployeeDto employeeDto) throws EmployeeException;
 
     /* method to delete payroll data for given empID
      *  @param empId
      *  @return String
      * */
-    String deleteEmployee(int empId) throws EmployeeException;
+    ResponseDto deleteEmployee(int empId) throws EmployeeException;
 }
