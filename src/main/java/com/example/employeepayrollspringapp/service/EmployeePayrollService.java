@@ -39,7 +39,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
         return responseDto;
     }
 
-    private Employee getEmployeeById(int empId) throws EmployeeException {
+    public Employee getEmployeeById(int empId) throws EmployeeException {
         return employeePayrollRepository.findById(empId).orElseThrow(() -> new EmployeeException(Message.EXCEPTION_WHILE_FINDING_ID.getMessage()));
     }
 

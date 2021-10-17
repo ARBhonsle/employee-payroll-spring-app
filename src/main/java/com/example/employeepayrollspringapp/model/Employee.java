@@ -29,11 +29,11 @@ public class Employee {
     private String salary;
     private String gender;
     private String note;
-    private LocalDate startDate;
     private String profilePic;
     @ElementCollection
     @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "id"))
     private List<String> department;
+    private LocalDate startDate;
 
     public Employee() {
     }
