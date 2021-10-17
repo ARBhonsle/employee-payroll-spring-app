@@ -27,10 +27,28 @@ public class Employee {
     private int emp_id;
     private String emp_name;
     private String salary;
-    public String gender;
-    public String note;
+    private String gender;
+    private String note;
     private LocalDate startDate;
     private String profilePic;
-    public String department;
+    @ElementCollection
+    @CollectionTable(name = "employee_department", joinColumns = @JoinColumn(name = "id"))
+    private List<String> department;
 
+    public Employee() {
+    }
+
+    public Employee(EmployeeDto employeeDto){
+        this.updateEmployee(employeeDto);
+    }
+
+    public void updateEmployee(EmployeeDto employeeDto) {
+        this.emp_name = employeeDto.getEmp_name();
+        this.salary = employeeDto.getSalary();
+        this.department = employeeDto.getDepartment();
+        this.gender = employeeDto.getGender();
+        this.note = employeeDto.getNote();
+        this.startDate = employeeDto.getStartDate();
+        this.profilePic = employeeDto.getProfilePic();
+    }
 }

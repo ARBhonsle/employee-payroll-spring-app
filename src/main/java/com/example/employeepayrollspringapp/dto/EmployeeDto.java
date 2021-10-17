@@ -28,13 +28,13 @@ class EmployeeDto {
     @NotEmpty(message = "Employee salary cannot be empty")
     private String salary;
     @Pattern(regexp = "male|female", message = "Gender is male or female")
-    public String gender;
+    private String gender;
     @NotBlank(message = "Note cannot be empty")
-    public String note;
+    private String note;
     @NotBlank(message = "profilePic should not be empty")
     private String profilePic;
-    @NotNull(message = "departmant should not be empty")
-    public String department;
+    @NotNull
+    private List<String> department;
 
     @JsonFormat(pattern = "dd MM yyyy")
     @NotNull(message = "start date should not be empty")

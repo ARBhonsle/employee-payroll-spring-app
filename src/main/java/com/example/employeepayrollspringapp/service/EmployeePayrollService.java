@@ -31,6 +31,9 @@ public class EmployeePayrollService implements IEmployeePayrollService {
     @Autowired
     ModelMapper modelMapper;
 
+    //local list to store employee data
+    private List<Employee> employeeList = new ArrayList<>();
+
     public ResponseDto findEmployeePayrollData() {
         ResponseDto responseDto = new ResponseDto(Message.GET_ALL_SUCCESSFUL.getMessage(), employeePayrollRepository.findAll());
         return responseDto;
@@ -48,7 +51,9 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 
     public ResponseDto addEmployee(EmployeeDto employeeDto) {
         Employee employee = new Employee();
+        employee.updateEmployee(employeeDto);
         modelMapper.map(employeeDto, employee);
+        employeeList.add(employee);
         employeePayrollRepository.save(employee);
         ResponseDto responseDto = new ResponseDto(Message.POST_SUCCESSFUL.getMessage(), employee);
         return responseDto;
@@ -57,6 +62,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
     public ResponseDto updateEmployee(int empId, EmployeeDto employeeDto) throws EmployeeException {
         Employee employee = this.getEmployeeById(empId);
         modelMapper.map(employeeDto, employee);
+        employeeList.set(empId, employee);
         employeePayrollRepository.save(employee);
         ResponseDto responseDto = new ResponseDto(Message.UPDATE_BY_ID_SUCCESSFUL.getMessage(), employee);
         return responseDto;
@@ -64,6 +70,7 @@ public class EmployeePayrollService implements IEmployeePayrollService {
 
     public ResponseDto deleteEmployee(int empId) throws EmployeeException {
         Employee employee = this.getEmployeeById(empId);
+        employeeList.remove(employee);
         employeePayrollRepository.delete(employee);
         ResponseDto responseDto = new ResponseDto(Message.DELETE_SUCCESSFUL.getMessage(), Message.DELETE_SUCCESS_RESPONSE.getMessage());
         return responseDto;

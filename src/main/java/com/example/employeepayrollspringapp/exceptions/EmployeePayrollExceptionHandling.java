@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 @Slf4j
 @ControllerAdvice
 public class EmployeePayrollExceptionHandling {
-    private final String DATE_FORMAT_MESSAGE="Should have date in format:  dd MM yyyy";
     @ExceptionHandler(value = EmployeeException.class)
     public ResponseEntity<ResponseDto> payrollExceptionHandler(EmployeeException employeeException) {
         ResponseDto responseDto = new ResponseDto(Message.EXCEPTION_WHILE_REST_REQUEST.getMessage(), employeeException.getMessage());
@@ -49,11 +48,5 @@ public class EmployeePayrollExceptionHandling {
     public ResponseEntity<?> globalExceptionHandler(Exception ex, WebRequest request) {
         ErrorDetail errorDetail = new ErrorDetail(new Date(), ex.getMessage(), request.getDescription(false));
         return new ResponseEntity<>(errorDetail, HttpStatus.BAD_REQUEST);
-    }
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<ResponseDto> handleHttpMessageNotReadableException(HttpMessageNotReadableException httpMessageNotReadableException){
-        log.error("Invalid Date Format",httpMessageNotReadableException);
-        ResponseDto responseDto = new ResponseDto(Message.EXCEPTION_WHILE_REST_REQUEST.getMessage(),DATE_FORMAT_MESSAGE);
-        return new ResponseEntity<>(responseDto,HttpStatus.BAD_REQUEST);
     }
 }
